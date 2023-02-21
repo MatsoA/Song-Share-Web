@@ -39,7 +39,7 @@ export default function SigninPage({userDetails, setUserDetails}) {
 
                 console.log(userDetails)
 
-                navigate('/app')
+                navigate('/nav')
                 
                 // ...
             }).catch((error) => {
