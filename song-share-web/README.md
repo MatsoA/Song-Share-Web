@@ -1,3 +1,8 @@
+# Running the project
+
+Make sure you're navigated to the inner folder: `cd song-share-web`
+Run npm install, then npm start
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
