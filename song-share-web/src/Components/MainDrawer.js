@@ -16,9 +16,11 @@ import {
     MenuOutlined,
     PersonAddAltOutlined
   } from "@mui/icons-material";
+  import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
   import { useState } from "react";
   import { Link, Outlet } from 'react-router-dom'
   
+  const drawerWidth = 240;
   //list of tabs for drawer
   const data = [
     {
@@ -30,6 +32,11 @@ import {
       name: "Add/Remove Friends", 
       icon: <PersonAddAltOutlined />,
       path: "friends" 
+    },
+    { 
+      name: "Send Songs", 
+      icon: <LibraryMusicIcon />,
+      path: "music" 
     },
   ];
   
@@ -57,7 +64,14 @@ import {
     return (
       <div>
         <Button onClick={() => setOpen(true)}><MenuOutlined /> Menu </Button> 
-        <Drawer open={open} anchor={"left"} onClose={() => setOpen(false)}>
+        <Drawer sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }} variant="permanent" anchor={"left"} onClose={() => setOpen(false)}>
           {getList()}
         </Drawer>
         <Outlet />

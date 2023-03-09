@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
-import {Stack, TextField, Button} from '@mui/material';
+import {Stack, TextField, Button, Box} from '@mui/material';
+import Banner from './banner';
 
 export default function ManageFriendPage() {
 
@@ -35,6 +36,11 @@ export default function ManageFriendPage() {
     useEffect(() => console.log(searchTerm), [searchTerm])
 
     return (
+        <Box>
+            <Banner/>
+        <Box
+        component="main"
+        sx={{ flexGrow: 1, bgcolor: 'background.default', pl: 30,  pt: 5}}>
         <form noValidate autoComplete = 'off' onSubmit={handleSubmit}>
             <TextField 
                 label = "Search User"
@@ -47,5 +53,7 @@ export default function ManageFriendPage() {
 
             <Button type="submit" variant = "contained">Search</Button>
         </form>
+        </Box>
+        </Box>
     )
 }

@@ -10,6 +10,7 @@ import {
   RouterProvider
 } from "react-router-dom"
 import MainDrawer from './Components/MainDrawer';
+import Banner from './Components/banner';
 
 
 
@@ -27,12 +28,14 @@ function App() {
   const routes = [
     //initial landing page
     {
+
       path: "/",
       element: <Signin userDetails={userDetails} setUserDetails = {setUserDetails}/>
     },
     //once signed in
     {
       path: "nav",
+      element: <Banner />,
       element: <MainDrawer />,
       errorElement: <ErrorPage />,
       children: [
