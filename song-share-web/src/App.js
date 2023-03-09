@@ -30,29 +30,28 @@ function App() {
     {
 
       path: "/",
-      element: <Signin userDetails={userDetails} setUserDetails = {setUserDetails}/>
+      element: <Signin userDetails={userDetails} setUserDetails={setUserDetails} />
     },
     //once signed in
     {
       path: "nav",
-      element: <Banner />,
       element: <MainDrawer />,
       errorElement: <ErrorPage />,
       children: [
         //default feed
         {
           index: true,
-          element: <MainPage userDetails={userDetails} setUserDetails = {setUserDetails}></MainPage>
+          element: <MainPage userDetails={userDetails} setUserDetails={setUserDetails}></MainPage>
         },
         //tab for searching for friends
         {
           path: "friends",
-          element: <ManageFriendPage userDetails={userDetails} setUserDetails = {setUserDetails}></ManageFriendPage>
+          element: <ManageFriendPage userDetails={userDetails} setUserDetails={setUserDetails}></ManageFriendPage>
         }
       ]
     },
   ]
-  
+
   const router = createBrowserRouter(routes)
 
   return (

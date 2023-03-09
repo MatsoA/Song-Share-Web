@@ -1,5 +1,5 @@
-import {useState, useEffect} from 'react';
-import {Stack, TextField, Button, Box} from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Stack, TextField, Button, Box } from '@mui/material';
 import Banner from './banner';
 
 export default function ManageFriendPage() {
@@ -37,23 +37,22 @@ export default function ManageFriendPage() {
 
     return (
         <Box>
-            <Banner/>
-        <Box
-        component="main"
-        sx={{ flexGrow: 1, bgcolor: 'background.default', pl: 30,  pt: 5}}>
-        <form noValidate autoComplete = 'off' onSubmit={handleSubmit}>
-            <TextField 
-                label = "Search User"
-                variant = "outlined"
-                value = {entry}
-                onChange={(e)=> {
-                    handleTextInputChange(e)
-                }}
-            />
+            <Box
+                component="main"
+                sx={{ flexGrow: 1, bgcolor: 'background.default', pl: 30, pt: 5 }}>
+                <form noValidate autoComplete='off' onSubmit={handleSubmit}>
+                    <TextField
+                        label="Search User"
+                        variant="outlined"
+                        value={entry}
+                        onChange={(e) => {
+                            handleTextInputChange(e)
+                        }}
+                    />
 
-            <Button type="submit" variant = "contained">Search</Button>
-        </form>
-        </Box>
+                    <Button type="submit" variant="contained">Search</Button>
+                </form>
+            </Box>
         </Box>
     )
 }
