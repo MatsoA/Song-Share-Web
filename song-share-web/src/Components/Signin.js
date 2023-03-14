@@ -7,8 +7,8 @@ import { collection, addDoc, getDocs } from "firebase/firestore"
 
 
 
-
 export default function Signin({ userDetails, setUserDetails }) {
+
 
 
     //needed for signInWithPopup
@@ -18,6 +18,7 @@ export default function Signin({ userDetails, setUserDetails }) {
 
     //wrapper for popup
     const signinUser = async () => {
+
         //trigger popup
         signInWithPopup(auth, authProvider)
             .then((result) => {
@@ -38,10 +39,6 @@ export default function Signin({ userDetails, setUserDetails }) {
                     uid: user.uid
                 });
 
-
-
-
-                console.log(userDetails)
 
                 navigate('/nav')
 

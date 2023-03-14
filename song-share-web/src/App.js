@@ -10,6 +10,9 @@ import {
   RouterProvider
 } from "react-router-dom"
 import MainDrawer from './Components/MainDrawer';
+import { collection, doc, addDoc, getDoc, query } from "firebase/firestore"
+import { firebaseApp, authProvider, database } from "./Components/firebaseConfig";
+import Register from "./Components/Register"
 
 
 
@@ -20,8 +23,29 @@ function App() {
     userName: "",
     email: "",
     profilePicture: "",
-    uid: 0
+    uid: "0"
   });
+
+  useEffect(() => {
+    console.log(userDetails.userName);
+
+    let found = false;
+
+    (async function() {
+
+      const docSnap = await getDoc(doc(database, "userList", userDetails.uid))
+      
+      if (!docSnap.exists()) {
+        Register({userDetails})
+      }
+      
+
+    })()
+    
+  }, [userDetails]);
+
+
+
 
   //Paths for React Router
   const routes = [
