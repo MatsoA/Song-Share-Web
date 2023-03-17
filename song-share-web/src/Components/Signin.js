@@ -1,15 +1,17 @@
 import {Button, Box, Typography, Grid} from '@mui/material';
 import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithRedirect } from "firebase/auth";
-import { firebaseApp, authProvider } from "./firebaseConfig";
+import { firebaseApp, authProvider, database } from "./firebaseConfig";
 import { useState, useEffect } from "react";
-import { redirect, useNavigate} from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom"
+import { collection, addDoc, getDocs } from "firebase/firestore"
 import Banner from './banner';
 
 
 
 
-export default function SigninPage({userDetails, setUserDetails}) {
-    
+export default function Signin({ userDetails, setUserDetails }) {
+
+
 
     //needed for signInWithPopup
     const auth = getAuth();
@@ -18,6 +20,7 @@ export default function SigninPage({userDetails, setUserDetails}) {
 
     //wrapper for popup
     const signinUser = async () => {
+
         //trigger popup
         signInWithPopup(auth, authProvider)
             .then((result) => {
@@ -29,7 +32,7 @@ export default function SigninPage({userDetails, setUserDetails}) {
 
                 console.log(user);
                 console.log(setUserDetails)
-                
+
                 //after popup is completed, update values of userDetails 
                 setUserDetails({
                     userName: user.displayName,
@@ -38,10 +41,9 @@ export default function SigninPage({userDetails, setUserDetails}) {
                     uid: user.uid
                 });
 
-                console.log(userDetails)
 
                 navigate('/nav')
-                
+
                 // ...
             }).catch((error) => {
                 // Handle Errors here.

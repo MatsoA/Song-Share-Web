@@ -14,14 +14,18 @@ import {
   MailOutline,
   ReceiptOutlined,
   MenuOutlined,
-  PersonAddAltOutlined
+  PersonAddAltOutlined,
+  LibraryMusicOutlined,
 } from "@mui/icons-material";
+import { useState } from "react";
+import { Link, Outlet } from 'react-router-dom'
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import { useState } from "react";
 import { Link, Outlet } from 'react-router-dom'
 import Banner from './banner';
 
 const drawerWidth = 240;
+
 //list of tabs for drawer
 const data = [
   {
