@@ -65,7 +65,6 @@ export default function ManageFriendPage({userDetails, setUserDetails}) {
 
 
     return (
-        <Box>
             <Box
                 component="main"
                 sx={{ flexGrow: 1, bgcolor: 'background.default', pl: 30, pt: 5 }}>
@@ -83,6 +82,5 @@ export default function ManageFriendPage({userDetails, setUserDetails}) {
                     <Button type="submit" variant="contained">Search</Button>
                 </form>
             </Box>
-        </Box>
     )
 }

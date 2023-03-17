@@ -20,8 +20,6 @@ import {
 import { useState } from "react";
 import { Link, Outlet } from 'react-router-dom'
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
-import { useState } from "react";
-import { Link, Outlet } from 'react-router-dom'
 import Banner from './banner';
 
 const drawerWidth = 240;
