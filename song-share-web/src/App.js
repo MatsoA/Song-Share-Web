@@ -13,6 +13,7 @@ import MainDrawer from './Components/MainDrawer';
 import { collection, doc, addDoc, getDoc, query } from "firebase/firestore"
 import { firebaseApp, authProvider, database } from "./Components/firebaseConfig";
 import Register from "./Components/Register"
+import Banner from './Components/banner';
 
 
 
@@ -51,8 +52,9 @@ function App() {
   const routes = [
     //initial landing page
     {
+
       path: "/",
-      element: <Signin userDetails={userDetails} setUserDetails = {setUserDetails}/>
+      element: <Signin userDetails={userDetails} setUserDetails={setUserDetails} />
     },
     //once signed in
     {
@@ -63,17 +65,17 @@ function App() {
         //default feed
         {
           index: true,
-          element: <MainPage userDetails={userDetails} setUserDetails = {setUserDetails}></MainPage>
+          element: <MainPage userDetails={userDetails} setUserDetails={setUserDetails}></MainPage>
         },
         //tab for searching for friends
         {
           path: "friends",
-          element: <ManageFriendPage userDetails={userDetails} setUserDetails = {setUserDetails}></ManageFriendPage>
+          element: <ManageFriendPage userDetails={userDetails} setUserDetails={setUserDetails}></ManageFriendPage>
         }
       ]
     },
   ]
-  
+
   const router = createBrowserRouter(routes)
 
   return (

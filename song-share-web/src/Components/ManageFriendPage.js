@@ -1,7 +1,8 @@
 import {useState, useEffect} from 'react';
-import {Stack, TextField, Button} from '@mui/material';
 import { collection, doc, addDoc, setDoc, getDocs, query, where } from "firebase/firestore"
-import { firebaseApp, authProvider, database } from "./firebaseConfig";
+import { firebaseApp, authProvider, database } from "./firebaseConfig"
+import { Stack, TextField, Button, Box } from '@mui/material';
+import Banner from './banner';
 
 export default function ManageFriendPage({userDetails, setUserDetails}) {
 
@@ -64,18 +65,24 @@ export default function ManageFriendPage({userDetails, setUserDetails}) {
 
 
     return (
-        <form noValidate autoComplete = 'off' onSubmit={handleSubmit}>
-            <TextField 
-                error = {(missingEntry) || (unfoundUsername)}
-                label = "Search User"
-                variant = "outlined"
-                value = {entry}
-                onChange={(e)=> {
-                    handleTextInputChange(e)
-                }}
-            />
+        <Box>
+            <Box
+                component="main"
+                sx={{ flexGrow: 1, bgcolor: 'background.default', pl: 30, pt: 5 }}>
+                <form noValidate autoComplete='off' onSubmit={handleSubmit}>
+                    <TextField
+                        label="Search User"
+                        error = {(missingEntry) || (unfoundUsername)}
+                        variant="outlined"
+                        value={entry}
+                        onChange={(e) => {
+                            handleTextInputChange(e)
+                        }}
+                    />
 
-            <Button type="submit" variant = "contained">Search</Button>
-        </form>
+                    <Button type="submit" variant="contained">Search</Button>
+                </form>
+            </Box>
+        </Box>
     )
 }

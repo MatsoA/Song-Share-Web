@@ -1,9 +1,11 @@
-import { Button } from '@mui/material'
+import {Button, Box, Typography, Grid} from '@mui/material';
 import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { firebaseApp, authProvider, database } from "./firebaseConfig";
 import { useState, useEffect } from "react";
 import { redirect, useNavigate } from "react-router-dom"
 import { collection, addDoc, getDocs } from "firebase/firestore"
+import Banner from './banner';
+
 
 
 
@@ -57,8 +59,24 @@ export default function Signin({ userDetails, setUserDetails }) {
 
 
     return (
+        
+        <Box
+        component="main"
+        sx={{ mx: 'auto', width: 400, bgcolor: 'background.default' }}>
+               
+            <Typography variant = "h3" align = "center" color = "textPrimary" gutterBottom>
+                        Welcome to Song Share
+                    </Typography>
+                    <Typography variant = "h6" align = "center" color = "textPrimary" gutterBottom>
+                        Please sign in using your Google account
+                    </Typography>
+                    <Grid container spacing = {2} justifyContent = "center">
+                    <Grid item>
         <Button variant="contained" onClick={() => {
             signinUser(userDetails, setUserDetails)
         }}> Sign In </Button>
+        </Grid>
+        </Grid>
+        </Box>
     )
 }
