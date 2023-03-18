@@ -1,8 +1,12 @@
 import {useState, useEffect} from 'react';
-import { collection, doc, addDoc, setDoc, getDocs, query, where } from "firebase/firestore"
+import { collection, doc, addDoc, setDoc, getDoc, getDocs, query, where } from "firebase/firestore"
 import { firebaseApp, authProvider, database } from "./firebaseConfig"
-import { Stack, TextField, Button, Box } from '@mui/material';
+import {getAuth} from "firebase/auth"
+import { Stack, TextField, Button, Box, Item, Paper, Divider } from '@mui/material';
+import {styled} from '@mui/material/styles'
 import Banner from './banner';
+import PendingFriendList from './PendingFriendList'
+import ActiveFriendList from './ActiveFriendsList'
 
 export default function ManageFriendPage({userDetails, setUserDetails}) {
 
@@ -38,6 +42,8 @@ export default function ManageFriendPage({userDetails, setUserDetails}) {
                 //send request to friend found
                 querySnapshot.forEach((document) => {
                     setUnfoundUsername(false);
+
+                    //TODO: only add as pending if not already active
                     
                     (async function() {
                         await setDoc(doc(database, "userList", document.data().uID, "friendList", userDetails.uid), {
@@ -78,9 +84,19 @@ export default function ManageFriendPage({userDetails, setUserDetails}) {
                             handleTextInputChange(e)
                         }}
                     />
-
                     <Button type="submit" variant="contained">Search</Button>
                 </form>
+                
+                <Divider />
+
+                <text>Incoming Friend Requests</text>
+                <PendingFriendList userDetails = {userDetails} />
+
+                <Divider />
+
+                <text>Friends</text>
+                <ActiveFriendList userDetails = {userDetails} />
+
             </Box>
     )
 }

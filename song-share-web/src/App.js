@@ -7,7 +7,8 @@ import ManageFriendPage from './Components/ManageFriendPage';
 import ErrorPage from './Components/error-page';
 import {
   createBrowserRouter,
-  RouterProvider
+  RouterProvider,
+  useNavigate
 } from "react-router-dom"
 import MainDrawer from './Components/MainDrawer';
 import { collection, doc, addDoc, getDoc, query } from "firebase/firestore"
@@ -30,18 +31,20 @@ function App() {
   useEffect(() => {
     console.log(userDetails.userName);
 
-    let found = false;
+    //only try to read database if we've signed in
+    if (userDetails.userName != "") {
 
-    (async function() {
+      (async function() {
 
-      const docSnap = await getDoc(doc(database, "userList", userDetails.uid))
-      
-      if (!docSnap.exists()) {
-        Register({userDetails})
-      }
-      
+        const docSnap = await getDoc(doc(database, "userList", userDetails.uid))
+        
+        if (!docSnap.exists()) {
+          Register({userDetails})
+        }
 
-    })()
+      })()
+
+    } 
     
   }, [userDetails]);
 
@@ -59,7 +62,7 @@ function App() {
     //once signed in
     {
       path: "nav",
-      element: <MainDrawer />,
+      element: <MainDrawer userDetails={userDetails} />,
       errorElement: <ErrorPage />,
       children: [
         //default feed

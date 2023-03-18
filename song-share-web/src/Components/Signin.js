@@ -18,6 +18,14 @@ export default function Signin({ userDetails, setUserDetails }) {
 
     const navigate = useNavigate();
 
+    //send user to actual app once they've signed in
+    //useEffect ensures userDetails is fully updated before switching
+    useEffect(() => {
+        if (userDetails.userName != "") {
+            navigate('/nav')
+        }
+    }, [userDetails])
+
     //wrapper for popup
     const signinUser = async () => {
 
@@ -40,9 +48,6 @@ export default function Signin({ userDetails, setUserDetails }) {
                     profilePicture: user.photoURL,
                     uid: user.uid
                 });
-
-
-                navigate('/nav')
 
                 // ...
             }).catch((error) => {

@@ -17,9 +17,10 @@ import {
   PersonAddAltOutlined,
   LibraryMusicOutlined,
 } from "@mui/icons-material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, Outlet } from 'react-router-dom'
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import { redirect, useNavigate } from "react-router-dom"
 import Banner from './banner';
 
 const drawerWidth = 240;
@@ -44,7 +45,18 @@ const data = [
 ];
 
 //actual drawer component
-export default function MainDrawer() {
+export default function MainDrawer({userDetails}) {
+
+  const navigate = useNavigate();
+
+  //check if userDetails has been reset by refresh
+  useEffect(() => {
+    console.log(userDetails)
+    if (userDetails.userName === "") {
+      navigate("/")
+    }
+  }, [])
+
 
   //tracker for state of drawer
   const [open, setOpen] = useState(false);
