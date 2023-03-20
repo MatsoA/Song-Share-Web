@@ -4,15 +4,13 @@ import { redirect, useNavigate} from "react-router-dom"
 import {useEffect} from "react"
 
 
-
-
 export default function Signout({userDetails, setUserDetails}) {
-
-    //used so useEffect is selective
-    let signout = false
 
     const navigate = useNavigate();
 
+    //TODO: implement session to save signin
+
+    //navigate back to signin on refresh
     useEffect(() => {
         if (userDetails.userName == "") {
             navigate("/")

@@ -11,11 +11,9 @@ import Banner from './banner';
 
 export default function Signin({ userDetails, setUserDetails }) {
 
-
-
     //needed for signInWithPopup
     const auth = getAuth();
-
+    
     const navigate = useNavigate();
 
     //send user to actual app once they've signed in

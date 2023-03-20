@@ -10,6 +10,8 @@ import List from '@mui/material/List';
 
 export default function PendingFriendList({userDetails}) {
    
+    //reads friendList from database and monitors any changes 
+    //hook updates and re-renders page on changes (used to correctly wait for response to render page correctly)
     const [pendingFriendList, loading, error] = useCollection(query(collection(database, "userList", userDetails.uid, "friendList"), where("friendStatus", "==", "pending")));
 
     return (

@@ -14,14 +14,17 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Avatar from '@mui/material/Avatar';
 
+//individual request entry in list of pending friends
+//encapsulates behavior on individual friend request
+
 export default function PendingFriend({userDetails, uid}) {
 
-
-    //console.log(uid)
-
+    //gets user data from database and monitors any changes on the database
+    //hook updates and re-renders page on changes (used to correctly wait for response to render page correctly)
     const [value, loading, error] = useDocument(doc(database, "userList", uid))
 
 
+    //update friendLists of both users of proposed friend relation 
     async function acceptFriendRequest() {
         const incomingRequestRef = doc(database, "userList", userDetails.uid, "friendList", uid);
         const senderRef = doc(database, "userList", uid, "friendList", userDetails.uid);
@@ -31,6 +34,8 @@ export default function PendingFriend({userDetails, uid}) {
         await setDoc(senderRef, {friendStatus: "active"}, {merge: true});
     }
 
+    //remove friendRequest from logged in users' friendList
+    //entry not made in requester's friendList so only one deletion necessary
     async function denyFriendRequest() {
         const incomingRequestRef = doc(database, "userList", userDetails.uid, "friendList", uid);
 

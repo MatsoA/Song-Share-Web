@@ -13,10 +13,11 @@ export default function ManageFriendPage({ userDetails, setUserDetails }) {
     //hook for input field
     const [entry, setEntry] = useState("")
 
-    //tracking for errors, used to trigger red box
+    // tracking for errors, used to trigger red box
     const [missingEntry, setMissingEntry] = useState(false);
     const [unfoundUsername, setUnfoundUsername] = useState(false);
 
+    // used to update text field helper text
     const [requestStatus, setRequestStatus] = useState("");
 
     //start search for friend upon submission
