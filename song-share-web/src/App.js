@@ -7,9 +7,14 @@ import ManageFriendPage from './Components/ManageFriendPage';
 import ErrorPage from './Components/error-page';
 import {
   createBrowserRouter,
-  RouterProvider
+  RouterProvider,
+  useNavigate
 } from "react-router-dom"
 import MainDrawer from './Components/MainDrawer';
+import { collection, doc, addDoc, getDoc, query } from "firebase/firestore"
+import { firebaseApp, authProvider, database } from "./Components/firebaseConfig";
+import Register from "./Components/Register"
+import Banner from './Components/banner';
 
 
 
@@ -20,36 +25,60 @@ function App() {
     userName: "",
     email: "",
     profilePicture: "",
-    uid: 0
+    uid: "0"
   });
+
+  useEffect(() => {
+    console.log(userDetails.userName);
+
+    //only try to read database if we've signed in
+    if (userDetails.userName != "") {
+
+      (async function() {
+
+        const docSnap = await getDoc(doc(database, "userList", userDetails.uid))
+        
+        if (!docSnap.exists()) {
+          Register({userDetails})
+        }
+
+      })()
+
+    } 
+    
+  }, [userDetails]);
+
+
+
 
   //Paths for React Router
   const routes = [
     //initial landing page
     {
+
       path: "/",
-      element: <Signin userDetails={userDetails} setUserDetails = {setUserDetails}/>
+      element: <Signin userDetails={userDetails} setUserDetails={setUserDetails} />
     },
     //once signed in
     {
       path: "nav",
-      element: <MainDrawer />,
+      element: <MainDrawer userDetails={userDetails} />,
       errorElement: <ErrorPage />,
       children: [
         //default feed
         {
           index: true,
-          element: <MainPage userDetails={userDetails} setUserDetails = {setUserDetails}></MainPage>
+          element: <MainPage userDetails={userDetails} setUserDetails={setUserDetails}></MainPage>
         },
         //tab for searching for friends
         {
           path: "friends",
-          element: <ManageFriendPage userDetails={userDetails} setUserDetails = {setUserDetails}></ManageFriendPage>
+          element: <ManageFriendPage userDetails={userDetails} setUserDetails={setUserDetails}></ManageFriendPage>
         }
       ]
     },
   ]
-  
+
   const router = createBrowserRouter(routes)
 
   return (
