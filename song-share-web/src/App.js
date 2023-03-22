@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Signin from './Components/Signin'
 import MainPage from './Components/MainPage';
 import ManageFriendPage from './Components/ManageFriendPage';
+import SendSong from './Components/SendSong';
 import ErrorPage from './Components/error-page';
 import {
   createBrowserRouter,
@@ -74,6 +75,10 @@ function App() {
         {
           path: "friends",
           element: <ManageFriendPage userDetails={userDetails} setUserDetails={setUserDetails}></ManageFriendPage>
+        },
+        {
+          path: "music",
+          element: <SendSong userDetails={userDetails} setUserDetails={setUserDetails}></SendSong>
         }
       ]
     },
