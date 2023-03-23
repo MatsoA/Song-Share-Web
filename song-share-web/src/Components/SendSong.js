@@ -8,71 +8,45 @@ import Banner from './banner';
 import PendingFriendList from './PendingFriendList'
 import SendFriendList from './SendFriendsList'
 
-export default function ManageFriendPage({ userDetails, setUserDetails }) {
+export default function SendSongsPage({ userDetails, setUserDetails }) {
 
     //hook for input field
     const [entry, setEntry] = useState("")
 
     // tracking for errors, used to trigger red box
     const [missingEntry, setMissingEntry] = useState(false);
-    const [unfoundUsername, setUnfoundUsername] = useState(false);
+    const [unfoundSong, setUnfoundSong] = useState(false);
 
     // used to update text field helper text
     const [requestStatus, setRequestStatus] = useState("");
 
-    //start search for friend upon submission
-    const handleSubmit = e => {
-
+    const handleSearch = e => {
         e.preventDefault();
 
-        //raise flag if no entry is typed
         if (entry.length === 0) {
             setMissingEntry(true);
         }
 
         if (entry.length !== 0) {
-            //query for how to look for friend (via email)
-            const friendSearch = query(collection(database, "userList"), where("email", "==", entry));
+            const songSearch = query(collection(database, "songList"), where("songName", "==", entry));
 
 
-            //if valid entry, excecute query and look for friend
             (async function () {
-                const querySnapshot = await getDocs(friendSearch);
+                const querySnapshot = await getDocs(songSearch);
 
                 //if query is empty, flag will remain true
-                setUnfoundUsername(true);
-                setRequestStatus("Unable to find user for email");
+                setUnfoundSong(true);
+                setRequestStatus("Unable to find Song");
 
-                //send request to friend found
                 querySnapshot.forEach((document) => {
-                    setUnfoundUsername(false);
+                    setUnfoundSong(false);
 
-                    //TODO: only add as pending if not already active
                     console.log(document.data());
-
-                    (async function () {
-                        const friendTest = await getDoc(doc(database, "userList", document.data().uID, "friendList", userDetails.uid))
-
-                        if (!friendTest.exists()) {
-                            await setDoc(doc(database, "userList", document.data().uID, "friendList", userDetails.uid), {
-                                friendStatus: "pending"
-                            })
-
-                            setRequestStatus("Request Sent")
-                        } else {
-                            setRequestStatus("Already Friends")
-                        }
-                    })();
-
+                        
+                    setRequestStatus("Song Found")
                 })
-
-
-
             })();
         }
-
-        //reset entry and error flags
-        setEntry("")
     }
 
     //dynamically show text input as user types into search box
@@ -82,7 +56,7 @@ export default function ManageFriendPage({ userDetails, setUserDetails }) {
 
         //reset error trackers since new input
         setMissingEntry(false);
-        setUnfoundUsername(false);
+        setUnfoundSong(false);
         setRequestStatus("");
     }
 
@@ -91,11 +65,11 @@ export default function ManageFriendPage({ userDetails, setUserDetails }) {
         <Box
             component="main"
             sx={{ flexGrow: 1, bgcolor: 'background.default', pl: 30, pt: 5 }}>
-            <form noValidate autoComplete='off' onSubmit={handleSubmit}>
+            <form noValidate autoComplete='off' onSubmit={handleSearch}>
                 <TextField
                     helperText={requestStatus}
                     label="Search Song"
-                    error={(missingEntry) || (unfoundUsername)}
+                    error={(missingEntry) || (unfoundSong)}
                     variant="outlined"
                     value={entry}
                     onChange={(e) => {
@@ -115,11 +89,6 @@ export default function ManageFriendPage({ userDetails, setUserDetails }) {
             <text>Friends</text>
             <text>/*When send is clicked it will send songs to the recipient from a send to song object*/</text>
             <SendFriendList userDetails={userDetails} />
-
-            <Divider />
-
-            <text>Incoming songs</text>
-            <text>/*Songs that are recieved will go here*/</text>
 
         </Box>
     )
