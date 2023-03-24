@@ -17,6 +17,10 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
     const [missingEntry, setMissingEntry] = useState(false);
     const [unfoundSong, setUnfoundSong] = useState(false);
 
+    // set for the list of songs
+    const [input, setInput] = useState("");
+    const [songList, setSongList] = useState([]);
+
     // used to update text field helper text
     const [requestStatus, setRequestStatus] = useState("");
 
@@ -25,6 +29,7 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
 
         if (entry.length === 0) {
             setMissingEntry(true);
+            setRequestStatus("No Song Inputted");
         }
 
         if (entry.length !== 0) {
@@ -37,13 +42,28 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
                 //if query is empty, flag will remain true
                 setUnfoundSong(true);
                 setRequestStatus("Unable to find Song");
+                setEntry("");
 
                 querySnapshot.forEach((document) => {
                     setUnfoundSong(false);
 
                     console.log(document.data());
+                    
+
+                    const id = songList.length + 1;
+                    setSongList((prev) => [
+                        ...prev,
+                        {
+                        songID: id,
+                        songName: entry,
+                        },
+                    ]);
+                    setInput("");
+                    setEntry("");
+
+                    console.log(songList);
                         
-                    setRequestStatus("Song Found")
+                    setRequestStatus("Song Found");
                 })
             })();
         }
@@ -58,6 +78,11 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
         setMissingEntry(false);
         setUnfoundSong(false);
         setRequestStatus("");
+    }
+
+    const handleDeleteListItem = (id) => {
+        console.log("remove item")
+        console.log(id);
     }
 
 
@@ -82,7 +107,22 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
             <Divider />
 
             <text>Songs to send</text>
-            <text>/*Songs will appear here in a list*/</text>
+            <text> TODO: add functionality to the remove buttons</text>
+            <ul>
+                {songList.map((song) => {
+                    return (
+                    <li
+                        id={song.id}
+                        style={{
+                        listStyle: "none",
+                        }}
+                    >
+                        {song.songName}
+                        <Button type="button" onClick={() => {handleDeleteListItem(song.id)}}>Remove</Button>
+                    </li>
+                    );
+                })}
+            </ul>
 
             <Divider />
 
