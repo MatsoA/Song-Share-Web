@@ -7,6 +7,7 @@ import { styled } from '@mui/material/styles'
 import Banner from './banner';
 import PendingFriendList from './PendingFriendList'
 import SendFriendList from './SendFriendsList'
+import { Key } from '@mui/icons-material';
 
 export default function SendSongsPage({ userDetails, setUserDetails }) {
 
@@ -51,6 +52,7 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
                     
 
                     const id = songList.length + 1;
+                    console.log(id);
                     setSongList((prev) => [
                         ...prev,
                         {
@@ -58,10 +60,9 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
                         songName: entry,
                         },
                     ]);
+
                     setInput("");
                     setEntry("");
-
-                    console.log(songList);
                         
                     setRequestStatus("Song Found");
                 })
@@ -80,10 +81,11 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
         setRequestStatus("");
     }
 
-    const handleDeleteListItem = (id) => {
-        console.log("remove item")
-        console.log(id);
-    }
+    const deleteById = id => {
+        setSongList(oldValues => {
+          return oldValues.filter(songList => songList.songID !== id)
+        })
+      }
 
 
     return (
@@ -107,19 +109,21 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
             <Divider />
 
             <text>Songs to send</text>
-            <text> TODO: add functionality to the remove buttons</text>
             <ul>
                 {songList.map((song) => {
                     return (
-                    <li
-                        id={song.id}
-                        style={{
-                        listStyle: "none",
-                        }}
-                    >
-                        {song.songName}
-                        <Button type="button" onClick={() => {handleDeleteListItem(song.id)}}>Remove</Button>
-                    </li>
+                        <li
+                            id={song.id}
+                            style={{
+                            listStyle: "none",
+                            }}
+                            
+                        >
+
+                            {song.songName}
+                            
+                            <Button type="button" onClick={() => {deleteById(song.songID)}}>Remove</Button>
+                        </li>
                     );
                 })}
             </ul>
