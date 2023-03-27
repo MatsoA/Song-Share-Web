@@ -1,4 +1,4 @@
-import {getFirestore, doc, setDoc, deleteDoc} from 'firebase/firestore'
+import {getFirestore, doc, setDoc, deleteDoc, getDoc} from 'firebase/firestore'
 import { useDocument } from 'react-firebase-hooks/firestore'
 import { firebaseApp, authProvider, database } from "./firebaseConfig"
 import {Stack, Item, Paper, Button} from '@mui/material'
@@ -14,6 +14,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Avatar from '@mui/material/Avatar';
 
+
 //individual friend entry in list of active friends
 //encapsulates behavior on individual friend
 
@@ -26,12 +27,23 @@ export default function ActiveFriend({userDetails, uid, songList, setSongList}) 
 
     //updates friendList of both users of a friend relation
     async function handleOnSend() {
+        for(var i = 0; i < songList.length; i++){
+            await setDoc(doc(database, "userList", userDetails.uid, "sentSongs", songList[i].songName + uid), {
+                recipient: userDetails.uid, listenedTo: false, rating: 0, review: "", songName: songList[i].songName, sentTo: uid
+            })
+
+            await setDoc(doc(database, "userList", uid, "recievedSongs", songList[i].songName + userDetails.uid), {
+                sentBy: userDetails.uid, songName: songList[i].songName
+            })
+        }
         
+
+        //var test = await getDoc(doc(database, "userList", userDetails.uid, 'sentSongs', songList[0] ));
+
+
 
         setSongList([]);
     }
-
-    //console.log(songList);
 
     //display friends list if useDocument() has finished
     return (
