@@ -31,7 +31,7 @@ export default function ActiveFriend({userDetails, uid, songList, setSongList}) 
         setSongList([]);
     }
 
-    console.log(songList);
+    //console.log(songList);
 
     //display friends list if useDocument() has finished
     return (
