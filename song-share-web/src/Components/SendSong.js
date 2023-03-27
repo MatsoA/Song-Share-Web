@@ -132,7 +132,7 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
 
             <text>Friends</text>
             <text>/*When send is clicked it will send songs to the recipient from a send to song object*/</text>
-            <SendFriendList userDetails={userDetails} />
+            <SendFriendList userDetails={userDetails} songList={songList} setSongList={setSongList}/>
 
         </Box>
     )

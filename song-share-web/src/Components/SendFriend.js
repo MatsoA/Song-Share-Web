@@ -17,7 +17,7 @@ import Avatar from '@mui/material/Avatar';
 //individual friend entry in list of active friends
 //encapsulates behavior on individual friend
 
-export default function ActiveFriend({userDetails, uid}) {
+export default function ActiveFriend({userDetails, uid, songList, setSongList}) {
 
     //gets user data from database and monitors any changes on the database
     //hook updates and re-renders page on changes (used to correctly wait for response to render page correctly)
@@ -25,16 +25,13 @@ export default function ActiveFriend({userDetails, uid}) {
 
 
     //updates friendList of both users of a friend relation
-    async function removeFriend() {
+    async function handleOnSend() {
+        
 
-        //get friendList references
-        const currentUserFriendRef = doc(database, "userList", userDetails.uid, "friendList", uid);
-        const otherUserFriendRef = doc(database, "userList", uid, "friendList", userDetails.uid);
-
-        //remove friends
-        await deleteDoc(currentUserFriendRef);
-        await deleteDoc(otherUserFriendRef);
+        setSongList([]);
     }
+
+    console.log(songList);
 
     //display friends list if useDocument() has finished
     return (
@@ -45,7 +42,7 @@ export default function ActiveFriend({userDetails, uid}) {
                 <div>
                       <Button type="submit" variant="contained"
                           onClick={() => {
-                              
+                              handleOnSend();
                           }}>Send
                       </Button>
                 </div>
