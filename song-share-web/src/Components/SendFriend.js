@@ -32,7 +32,7 @@ export default function ActiveFriend({userDetails, uid, songList, setSongList}) 
                 recipient: userDetails.uid, listenedTo: false, rating: 0, review: "", songName: songList[i].songName, sentTo: uid
             })
 
-            await setDoc(doc(database, "userList", uid, "recievedSongs", songList[i].songName + userDetails.uid), {
+            await setDoc(doc(database, "userList", uid, "receivedSongs", songList[i].songName + userDetails.uid), {
                 sentBy: userDetails.uid, songName: songList[i].songName
             })
         }
