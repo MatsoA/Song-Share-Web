@@ -7,6 +7,52 @@ import { styled } from '@mui/material/styles'
 import Banner from './banner';
 import PendingFriendList from './PendingFriendList'
 import SendFriendList from './SendFriendsList'
+import getKeys from '../keys'
+
+/*
+function getSearchSuggestions(query){
+    return fetch(`http://suggestqueries.google.com/complete/search`,
+    {
+        client: "youtube",
+        ds: "yt",
+        client: "firefox", //doesn't give json without this, for some reason
+        q: query,
+        origin: "localhost",
+        Headers: JSON.stringify({
+            "Content-Type": "application/json",
+        }),
+        Method: "GET"
+    }).then(
+        result => result[1] //list of suggestion strings
+    )
+}
+*/
+
+//This function returns a promise. Follow it with .then(), with a callback to run
+function ytSearch(query, quantity){
+    return getKeys().then(function(keys){
+        return fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&order=relevance&maxResults=5&q=${encodeURIComponent(query)}&key=${encodeURIComponent(keys.ytApiKey)}`, {
+        Headers: JSON.stringify({
+            "Content-Type": "application/json",
+        }),
+        Method: "GET"
+    })}).then(
+        function(response) { return response.json() }
+    ).then(
+        function(result){
+            console.log(result);
+            var output = [];
+            for(let i = 0; i < result.items.length; i++){
+                output[i] = {
+                    "title": result.items[i].snippet.title, 
+                    "url": "youtu.be/" + result.items[i].id.videoId,
+                    "thumbnail": result.items[i].snippet.thumbnails.default.url
+                };
+            }
+            return output;
+        }
+    ) //returns a list [{title, url, thumbnail}, ...]
+}
 
 export default function ManageFriendPage({ userDetails, setUserDetails }) {
 
