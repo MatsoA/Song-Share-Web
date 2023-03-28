@@ -35,7 +35,7 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
 
         if (entry.length !== 0) {
             const songSearch = query(collection(database, "songList"), where("songName", "==", entry));
-
+            
 
             (async function () {
                 const querySnapshot = await getDocs(songSearch);
@@ -50,14 +50,16 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
 
                     console.log(document.data());
                     
+                    console.log(entry.songID)
 
                     const id = songList.length + 1;
-                    console.log(id);
+
                     setSongList((prev) => [
                         ...prev,
                         {
-                        songID: id,
+                        songID: document.id,
                         songName: entry,
+                        index: id
                         },
                     ]);
 
@@ -83,7 +85,7 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
 
     const deleteById = id => {
         setSongList(oldValues => {
-          return oldValues.filter(songList => songList.songID !== id)
+          return oldValues.filter(songList => songList.index !== id)
         })
       }
 
@@ -122,7 +124,7 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
 
                             {song.songName}
                             
-                            <Button type="button" onClick={() => {deleteById(song.songID)}}>Remove</Button>
+                            <Button type="button" onClick={() => {deleteById(song.index)}}>Remove</Button>
                         </li>
                     );
                 })}

@@ -1,4 +1,4 @@
-import {getFirestore, doc, setDoc, deleteDoc, getDoc} from 'firebase/firestore'
+import {getFirestore, doc, setDoc, deleteDoc, getDoc, where} from 'firebase/firestore'
 import { useDocument } from 'react-firebase-hooks/firestore'
 import { firebaseApp, authProvider, database } from "./firebaseConfig"
 import {Stack, Item, Paper, Button} from '@mui/material'
@@ -24,6 +24,10 @@ export default function ActiveFriend({userDetails, uid, songList, setSongList}) 
     //hook updates and re-renders page on changes (used to correctly wait for response to render page correctly)
     const [value, loading, error] = useDocument(doc(database, "userList", uid))
 
+    
+
+    
+
 
     //updates friendList of both users of a friend relation
     async function handleOnSend() {
@@ -33,7 +37,7 @@ export default function ActiveFriend({userDetails, uid, songList, setSongList}) 
             })
 
             await setDoc(doc(database, "userList", uid, "receivedSongs", songList[i].songName + userDetails.uid), {
-                sentBy: userDetails.uid, songName: songList[i].songName
+                sentBy: userDetails.uid, songName: songList[i].songName, songID: songList[i].songID
             })
         }
         
