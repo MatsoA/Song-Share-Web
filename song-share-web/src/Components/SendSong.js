@@ -9,7 +9,7 @@ import PendingFriendList from './PendingFriendList'
 import SendFriendList from './SendFriendsList'
 import getKeys from '../keys'
 
-/*
+/* Does not work due to google restricting their search suggestion api
 function getSearchSuggestions(query){
     return fetch(`http://suggestqueries.google.com/complete/search`,
     {
@@ -29,6 +29,7 @@ function getSearchSuggestions(query){
 */
 
 //This function returns a promise. Follow it with .then(), with a callback to run
+//example: ytSearch("some string here").then(result => console.log(result))
 function ytSearch(query, quantity){
     return getKeys().then(function(keys){
         return fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&order=relevance&maxResults=5&q=${encodeURIComponent(query)}&key=${encodeURIComponent(keys.ytApiKey)}`, {
