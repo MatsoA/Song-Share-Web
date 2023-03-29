@@ -35,18 +35,18 @@ function App() {
     //only try to read database if we've signed in
     if (userDetails.userName != "") {
 
-      (async function() {
+      (async function () {
 
         const docSnap = await getDoc(doc(database, "userList", userDetails.uid))
-        
+
         if (!docSnap.exists()) {
-          Register({userDetails})
+          Register({ userDetails })
         }
 
       })()
 
-    } 
-    
+    }
+
   }, [userDetails]);
 
 
@@ -63,7 +63,7 @@ function App() {
     //once signed in
     {
       path: "nav",
-      element: <MainDrawer userDetails={userDetails} />,
+      element: <MainDrawer userDetails={userDetails} setUserDetails={setUserDetails} />,
       errorElement: <ErrorPage />,
       children: [
         //default feed

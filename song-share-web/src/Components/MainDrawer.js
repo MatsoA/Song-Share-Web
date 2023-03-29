@@ -45,7 +45,7 @@ const data = [
 ];
 
 //actual drawer component
-export default function MainDrawer({userDetails}) {
+export default function MainDrawer({ userDetails, setUserDetails }) {
 
   const navigate = useNavigate();
 
@@ -78,7 +78,7 @@ export default function MainDrawer({userDetails}) {
   );
   return (
     <div>
-      <Banner />
+      <Banner userDetails={userDetails} setUserDetails={setUserDetails} />
       <Button onClick={() => setOpen(true)}><MenuOutlined /> Menu </Button>
       <Drawer sx={{
         width: drawerWidth,
