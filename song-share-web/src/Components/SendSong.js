@@ -41,7 +41,6 @@ function ytSearch(query, quantity){
         function(response) { return response.json() }
     ).then(
         function(result){
-            console.log(result);
             var output = [];
             for(let i = 0; i < result.items.length; i++){
                 output[i] = {
