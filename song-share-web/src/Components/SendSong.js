@@ -8,6 +8,52 @@ import Banner from './banner';
 import PendingFriendList from './PendingFriendList'
 import SendFriendList from './SendFriendsList'
 import { Key } from '@mui/icons-material';
+import getKeys from '../keys'
+
+/* Does not work due to google restricting their search suggestion api
+function getSearchSuggestions(query){
+    return fetch(`http://suggestqueries.google.com/complete/search`,
+    {
+        client: "youtube",
+        ds: "yt",
+        client: "firefox", //doesn't give json without this, for some reason
+        q: query,
+        origin: "localhost",
+        Headers: JSON.stringify({
+            "Content-Type": "application/json",
+        }),
+        Method: "GET"
+    }).then(
+        result => result[1] //list of suggestion strings
+    )
+}
+*/
+
+//This function returns a promise. Follow it with .then(), with a callback to run
+//example: ytSearch("some string here").then(result => console.log(result))
+function ytSearch(query, quantity){
+    return getKeys().then(function(keys){
+        return fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&order=relevance&maxResults=5&q=${encodeURIComponent(query)}&key=${encodeURIComponent(keys.ytApiKey)}`, {
+        Headers: JSON.stringify({
+            "Content-Type": "application/json",
+        }),
+        Method: "GET"
+    })}).then(
+        function(response) { return response.json() }
+    ).then(
+        function(result){
+            var output = [];
+            for(let i = 0; i < result.items.length; i++){
+                output[i] = {
+                    "title": result.items[i].snippet.title, 
+                    "url": "youtu.be/" + result.items[i].id.videoId,
+                    "thumbnail": result.items[i].snippet.thumbnails.default.url
+                };
+            }
+            return output;
+        }
+    ) //returns a list [{title, url, thumbnail}, ...]
+}
 
 export default function SendSongsPage({ userDetails, setUserDetails }) {
 
