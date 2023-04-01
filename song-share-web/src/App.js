@@ -16,7 +16,7 @@ import { collection, doc, addDoc, getDoc, query } from "firebase/firestore"
 import { firebaseApp, authProvider, database } from "./Components/firebaseConfig";
 import Register from "./Components/Register"
 import Banner from './Components/banner';
-
+import {getAuth, onAuthStateChanged} from "firebase/auth";
 
 
 function App() {
@@ -28,6 +28,22 @@ function App() {
     profilePicture: "",
     uid: "0"
   });
+  
+  //on page load check if we have a stored login for user, 
+  useEffect(() => {
+    const auth = getAuth()
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserDetails({
+          userName: user.displayName,
+          email: user.email,
+          profilePicture: user.photoURL,
+          uid: user.uid
+        });
+        // ...
+      } 
+    })
+  }, [])
 
   useEffect(() => {
     console.log(userDetails.userName);
@@ -45,7 +61,7 @@ function App() {
 
       })()
 
-    }
+    } 
 
   }, [userDetails]);
 

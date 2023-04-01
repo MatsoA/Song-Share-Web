@@ -24,6 +24,7 @@ export default function PendingFriend({userDetails, uid}) {
     const [value, loading, error] = useDocument(doc(database, "userList", uid))
 
 
+
     //update friendLists of both users of proposed friend relation 
     async function acceptFriendRequest() {
         const incomingRequestRef = doc(database, "userList", userDetails.uid, "friendList", uid);

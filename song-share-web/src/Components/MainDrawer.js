@@ -48,15 +48,7 @@ const data = [
 export default function MainDrawer({ userDetails, setUserDetails }) {
 
   const navigate = useNavigate();
-
-  //check if userDetails has been reset by refresh
-  useEffect(() => {
-    console.log(userDetails)
-    if (userDetails.userName === "") {
-      navigate("/")
-    }
-  }, [])
-
+  
 
   //tracker for state of drawer
   const [open, setOpen] = useState(false);
