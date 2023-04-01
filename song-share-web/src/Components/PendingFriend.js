@@ -68,6 +68,7 @@ export default function PendingFriend({userDetails, uid}) {
                 <Avatar
                   alt={`Avatar n°${value + 1}`}
                   src={value.data().profilePicture}
+                  crossOrigin = "anonymous"
                 />
             </ListItemAvatar>
             <ListItemText primary={value.data().displayName} />

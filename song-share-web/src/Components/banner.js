@@ -55,6 +55,7 @@ export default function Banner({ userDetails, setUserDetails }) {
                   <Avatar
                     alt="Profile Picture"
                     src={userDetails.profilePicture}
+                    crossOrigin = "anonymous"
                   />}
                 title={userDetails.userName}
               />
