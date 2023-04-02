@@ -7,6 +7,7 @@ export default function Banner() {
     return (
         <CssBaseline>
       <AppBar
+        color = 'primary' enableColorOnDark
         position="fixed"
         sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
       >

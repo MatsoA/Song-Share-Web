@@ -1,4 +1,4 @@
-import {Stack, Item, Paper} from '@mui/material'
+import {Stack, Item, Paper, Divider, TableBody} from '@mui/material'
 import {styled} from '@mui/material/styles'
 import {doc, collection, getDoc, getDocs, query, where} from "firebase/firestore"
 import {useCollectionData, useCollection} from "react-firebase-hooks/firestore"
@@ -10,20 +10,19 @@ import List from '@mui/material/List';
 
 export function SongFeedList({userDetails}) {
    
-    //reads friendList from database and monitors any changes
-    //hook updates and re-renders page on changes (used to correctly wait for response to render page correctly)
-    const [sendFeed, loading, error] = useCollection(query(collection(database, "userList", userDetails.uid, "recievedSongs")));
+    //reads received songs of the user from the database
+    const [sendFeed, loading, error] = useCollection(query(collection(database, "userList", userDetails.uid, "receivedSongs")));
 
     // useEffect(()=> {
     //     console.log(sendFeed.docs)
     // },[sendFeed])
 
     return (
-        <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <TableBody>
             {sendFeed && sendFeed.docs.map((doc, index) => (
-                <Song key= {index} SongID = {doc.data().SongID}/>          
+                <Song key= {index} songID = {doc.data().songID} sentBy = {doc.data().sentBy} userDetails = {userDetails} />          
             ))}
-        </List>
+        </TableBody>
     )
     
 
