@@ -33,7 +33,7 @@ export default function ActiveFriend({userDetails, uid, songList, setSongList}) 
     async function handleOnSend() {
         for(var i = 0; i < songList.length; i++){
             await setDoc(doc(database, "userList", userDetails.uid, "sentSongs", songList[i].songName + uid), {
-                recipient: userDetails.uid, listenedTo: false, rating: 0, review: "", songName: songList[i].songName, sentTo: uid
+                recipient: userDetails.uid, listenedTo: false, rating: 0, review: "", songName: songList[i].songName, sentTo: uid, songID: songList[i].songID
             })
 
             await setDoc(doc(database, "userList", uid, "receivedSongs", songList[i].songName + userDetails.uid), {
