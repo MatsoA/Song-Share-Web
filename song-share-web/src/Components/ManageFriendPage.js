@@ -107,12 +107,12 @@ export default function ManageFriendPage({ userDetails, setUserDetails }) {
 
             <Divider />
 
-            <text>Incoming Friend Requests</text>
+            Incoming Friend Requests
             <PendingFriendList userDetails={userDetails} />
 
             <Divider />
 
-            <text>Friends</text>
+            Friends
             <ActiveFriendList userDetails={userDetails} />
 
         </Box>

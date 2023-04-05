@@ -45,18 +45,10 @@ const data = [
 ];
 
 //actual drawer component
-export default function MainDrawer({userDetails}) {
+export default function MainDrawer({ userDetails, setUserDetails }) {
 
   const navigate = useNavigate();
-
-  //check if userDetails has been reset by refresh
-  useEffect(() => {
-    console.log(userDetails)
-    if (userDetails.userName === "") {
-      navigate("/")
-    }
-  }, [])
-
+  
 
   //tracker for state of drawer
   const [open, setOpen] = useState(false);
@@ -78,7 +70,7 @@ export default function MainDrawer({userDetails}) {
   );
   return (
     <div>
-      <Banner />
+      <Banner userDetails={userDetails} setUserDetails={setUserDetails} />
       <Button onClick={() => setOpen(true)}><MenuOutlined /> Menu </Button>
       <Drawer sx={{
         width: drawerWidth,

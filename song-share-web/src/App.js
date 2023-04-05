@@ -16,6 +16,7 @@ import { collection, doc, addDoc, getDoc, query } from "firebase/firestore"
 import { firebaseApp, authProvider, database } from "./Components/firebaseConfig";
 import Register from "./Components/Register"
 import Banner from './Components/banner';
+import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {ThemeProvider, createTheme} from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import {purple, blue, amber} from '@mui/material/colors'
@@ -38,6 +39,22 @@ function App() {
     profilePicture: "",
     uid: "0"
   });
+  
+  //on page load check if we have a stored login for user, 
+  useEffect(() => {
+    const auth = getAuth()
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserDetails({
+          userName: user.displayName,
+          email: user.email,
+          profilePicture: user.photoURL,
+          uid: user.uid
+        });
+        // ...
+      } 
+    })
+  }, [])
 
   useEffect(() => {
     console.log(userDetails.userName);
@@ -45,18 +62,18 @@ function App() {
     //only try to read database if we've signed in
     if (userDetails.userName != "") {
 
-      (async function() {
+      (async function () {
 
         const docSnap = await getDoc(doc(database, "userList", userDetails.uid))
-        
+
         if (!docSnap.exists()) {
-          Register({userDetails})
+          Register({ userDetails })
         }
 
       })()
 
     } 
-    
+
   }, [userDetails]);
 
 
@@ -73,7 +90,7 @@ function App() {
     //once signed in
     {
       path: "nav",
-      element: <MainDrawer userDetails={userDetails} />,
+      element: <MainDrawer userDetails={userDetails} setUserDetails={setUserDetails} />,
       errorElement: <ErrorPage />,
       children: [
         //default feed
