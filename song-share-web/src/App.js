@@ -17,7 +17,18 @@ import { firebaseApp, authProvider, database } from "./Components/firebaseConfig
 import Register from "./Components/Register"
 import Banner from './Components/banner';
 import {getAuth, onAuthStateChanged} from "firebase/auth";
+import {ThemeProvider, createTheme} from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
+import {purple, blue, amber} from '@mui/material/colors'
 
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: purple,
+    secondary: blue,
+  },
+});
 
 function App() {
 
@@ -103,7 +114,10 @@ function App() {
   const router = createBrowserRouter(routes)
 
   return (
+    <ThemeProvider theme= {darkTheme}>
+      <CssBaseline />
     <RouterProvider router={router} />
+    </ThemeProvider>
   );
 }
 

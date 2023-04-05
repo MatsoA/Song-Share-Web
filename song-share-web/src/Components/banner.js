@@ -18,6 +18,7 @@ import Signout from "./Signout"
 
 const drawerWidth = 240;
 
+
 export default function Banner({ userDetails, setUserDetails }) {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -31,13 +32,14 @@ export default function Banner({ userDetails, setUserDetails }) {
 
 
   return (
-    <CssBaseline>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar
-          position="static"
-          sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
-        >
-          <Toolbar>
+        <CssBaseline>
+      <AppBar
+        color = 'primary' enableColorOnDark
+        position="fixed"
+        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+      >
+        <Toolbar>
+
             <LibraryMusicIcon />
             <Typography variant="h5" noWrap component="div" sx={{ flexGrow: 1 }}>
               Song Share
