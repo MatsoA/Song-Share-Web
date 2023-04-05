@@ -7,6 +7,7 @@ import { Box, Divider, Checkbox, FormGroup, FormControlLabel, Typography,
     Table, TableBody, TableCell, TableHead, TableRow, Paper, TableContainer } from '@mui/material';
 import {SongFeedList} from './SongFeedList'
 import Song from './Song'
+import { SentByMeList } from './SentByMeList';
 
 
 
@@ -17,7 +18,7 @@ export default function MainPage({ userDetails, setUserDetails }) {
             component="main"
             sx={{ flexGrow: 1, bgcolor: 'background.default', pl: 30, pt: 5 }}>
             <Typography variant = 'h6'>
-             My Feed
+             Sent To Me
             </Typography>
             <Divider />
             <TableContainer component={Paper}>
@@ -25,7 +26,6 @@ export default function MainPage({ userDetails, setUserDetails }) {
                     <TableHead>
                         <TableRow>
                         <TableCell sx={{ typography: 'body1'}}>Play</TableCell>
-
                             <TableCell sx={{ typography: 'body1'}}>Title</TableCell>
                             <TableCell align = "left" sx={{ typography: 'body1'}}>Sent By</TableCell>
                             <TableCell align = "left" sx={{ typography: 'body1'}}>Review</TableCell>
@@ -35,6 +35,23 @@ export default function MainPage({ userDetails, setUserDetails }) {
                 </Table>
             </TableContainer>
             <Divider />
+            <Typography variant= 'h6'>
+            Sent By Me
+            </Typography>
+            <TableContainer component={Paper}>
+                <Table aria-label="Sent By Me">
+                    <TableHead>
+                        <TableRow>
+                        <TableCell sx={{ typography: 'body1'}}>Play</TableCell>
+
+                            <TableCell sx={{ typography: 'body1'}}>Title</TableCell>
+                            <TableCell align = "left" sx={{ typography: 'body1'}}>Sent By</TableCell>
+                            <TableCell align = "left" sx={{ typography: 'body1'}}>Review</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <SentByMeList userDetails = {userDetails}/>
+                </Table>
+            </TableContainer>
         </Box>
     );
 
