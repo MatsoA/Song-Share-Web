@@ -18,7 +18,7 @@ import Avatar from '@mui/material/Avatar';
 //individual friend entry in list of active friends
 //encapsulates behavior on individual friend
 
-export default function ActiveFriend({userDetails, uid, songList, setSongList}) {
+export default function sendFriend({userDetails, uid, songList, setSongList}) {
 
     //gets user data from database and monitors any changes on the database
     //hook updates and re-renders page on changes (used to correctly wait for response to render page correctly)

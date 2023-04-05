@@ -8,7 +8,7 @@ import { BiotechOutlined, Pending } from '@mui/icons-material'
 import SendFriend from "./SendFriend"
 import List from '@mui/material/List';
 
-export default function ActiveFriendList({userDetails, songList, setSongList}) {
+export default function SendFriendList({userDetails, songList, setSongList}) {
    
     //reads friendList from database and monitors any changes
     //hook updates and re-renders page on changes (used to correctly wait for response to render page correctly)
