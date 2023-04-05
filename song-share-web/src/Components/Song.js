@@ -2,7 +2,7 @@ import {getFirestore, doc, setDoc, deleteDoc} from 'firebase/firestore'
 import { useDocument } from 'react-firebase-hooks/firestore'
 import { firebaseApp, authProvider, database } from "./firebaseConfig"
 import {Stack, Item, Paper, Typography, Divider, TableRow, TableCell} from '@mui/material'
-
+import Play from './Play'
 import Avatar from '@mui/material/Avatar';
 import Review from './Review'
 
@@ -24,6 +24,9 @@ export default function Song({songID, sentBy, userDetails}) {
         key={song.data().songName}
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
         >
+                    <TableCell align = "left">
+            <Play videoLink= {song.data().songURL} />
+        </TableCell>
         <TableCell component="th" scope = "row"> 
         {song.data().songName}
         </TableCell>

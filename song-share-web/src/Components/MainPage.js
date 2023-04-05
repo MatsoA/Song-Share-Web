@@ -24,6 +24,8 @@ export default function MainPage({ userDetails, setUserDetails }) {
                 <Table aria-label="Songs">
                     <TableHead>
                         <TableRow>
+                        <TableCell sx={{ typography: 'body1'}}>Play</TableCell>
+
                             <TableCell sx={{ typography: 'body1'}}>Title</TableCell>
                             <TableCell align = "left" sx={{ typography: 'body1'}}>Sent By</TableCell>
                             <TableCell align = "left" sx={{ typography: 'body1'}}>Review</TableCell>
