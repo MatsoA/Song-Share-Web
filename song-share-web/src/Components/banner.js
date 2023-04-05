@@ -76,7 +76,6 @@ export default function Banner({ userDetails, setUserDetails }) {
             </Menu>
           </Toolbar>
         </AppBar>
-      </Box>
     </CssBaseline>
   );
 }
