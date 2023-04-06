@@ -2,7 +2,10 @@ import Signout from './Signout';
 import { useLocation } from 'react-router-dom'
 import { collection, addDoc, getDocs } from "firebase/firestore"
 import { database } from "./firebaseConfig";
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
+import Play from './Play'
+
+
 
 export default function MainPage({ userDetails, setUserDetails }) {
 
@@ -16,6 +19,7 @@ export default function MainPage({ userDetails, setUserDetails }) {
                 Email: {userDetails.email}
                 <img style={{ width: 50, height: 50 }} src={userDetails.profilePicture} />
                 <Signout userDetails={userDetails} setUserDetails={setUserDetails} />
+                <Play videoLink={'https://www.youtube.com/watch?v=ZzI9JE0i6Lc'} />
             </div>
         </Box>
     );
