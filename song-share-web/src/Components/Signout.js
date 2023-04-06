@@ -12,8 +12,8 @@ export default function Signout({ userDetails, setUserDetails }) {
 
     //navigate back to signin on refresh
     useEffect(() => {
-        if (userDetails.userName == "") {
-            navigate("/")
+        if (userDetails.userName === "") {
+            navigate("..")
         }
     }, [userDetails])
 
@@ -21,13 +21,12 @@ export default function Signout({ userDetails, setUserDetails }) {
         <Button variant="text" onClick={() => {
             const auth = getAuth();
             signOut(auth).then(() => {
-
                 setUserDetails({
                     userName: "",
                     email: "",
                     profilePicture: "",
-                    uid: 0
-                })
+                    uid: "0"
+                  })
             }).catch((error) => {
                 // An error happened.
             });

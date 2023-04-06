@@ -14,6 +14,7 @@ export default function PendingFriendList({userDetails}) {
     //hook updates and re-renders page on changes (used to correctly wait for response to render page correctly)
     const [pendingFriendList, loading, error] = useCollection(query(collection(database, "userList", userDetails.uid, "friendList"), where("friendStatus", "==", "pending")));
 
+
     return (
         <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             {pendingFriendList && pendingFriendList.docs.map((doc, index) => (

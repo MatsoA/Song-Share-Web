@@ -4,6 +4,7 @@ import { firebaseApp, authProvider, database } from "./firebaseConfig";
 import { useState, useEffect } from "react";
 import { redirect, useNavigate } from "react-router-dom"
 import { collection, addDoc, getDocs } from "firebase/firestore"
+import {useSignInWithGoogle} from "react-firebase-hooks/auth"
 import Banner from './banner';
 
 
@@ -60,7 +61,6 @@ export default function Signin({ userDetails, setUserDetails }) {
             });
     }
 
-
     return (
         
         <Box
@@ -76,7 +76,7 @@ export default function Signin({ userDetails, setUserDetails }) {
                     <Grid container spacing = {2} justifyContent = "center">
                     <Grid item>
         <Button variant="contained" onClick={() => {
-            signinUser(userDetails, setUserDetails)
+            signinUser()
         }}> Sign In </Button>
         </Grid>
         </Grid>
