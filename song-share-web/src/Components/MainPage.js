@@ -6,6 +6,7 @@ import { Box } from '@mui/material';
 import Play from './Play'
 
 
+
 export default function MainPage({ userDetails, setUserDetails }) {
 
 
