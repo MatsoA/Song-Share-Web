@@ -8,10 +8,10 @@ import { BiotechOutlined, Pending } from '@mui/icons-material'
 import Song from "./Song"
 import List from '@mui/material/List';
 
-export function SongFeedList({userDetails}) {
+export function SentByMeList({userDetails}) {
    
     //reads received songs of the user from the database
-    const [sendFeed, loading, error] = useCollection(query(collection(database, "userList", userDetails.uid, "receivedSongs")));
+    const [sentFeed, loading, error] = useCollection(query(collection(database, "userList", userDetails.uid, "sentSongs")));
 
     // useEffect(()=> {
     //     console.log(sendFeed.docs)
@@ -19,8 +19,8 @@ export function SongFeedList({userDetails}) {
 
     return (
         <TableBody>
-            {sendFeed && sendFeed.docs.map((doc, index) => (
-                <Song comments ={doc.data().review} viewOnly= {false} key= {index} songID = {doc.data().songID} sentBy = {doc.data().sentBy} userDetails = {userDetails} rating= {doc.data().rating} />          
+            {sentFeed && sentFeed.docs.map((doc, index) => (
+                <Song comments={doc.data().review} viewOnly={true} key= {index} songID = {doc.data().songID} sentBy = {doc.data().sentTo} userDetails = {userDetails} rating = {doc.data().rating} />          
             ))}
         </TableBody>
     )
