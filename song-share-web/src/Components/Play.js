@@ -26,7 +26,7 @@ export default function Play({ videoLink }) {
     //match returns array in the form [input link, id of video]
     let videoId = videoLink.match(/^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/)[1]
     return (
-        <div>
+        <>
             <IconButton onClick={handleOpen}><PlayCircleIcon /></IconButton>
             <Modal
                 open={playerOpen}
@@ -46,6 +46,6 @@ export default function Play({ videoLink }) {
                     src={`https://youtube.com/embed/${videoId}?autoplay=0`}>
                 </iframe>
             </Modal>
-        </div>
+        </>
     );
 }

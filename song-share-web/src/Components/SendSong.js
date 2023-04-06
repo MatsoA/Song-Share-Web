@@ -10,6 +10,7 @@ import SendFriendList from './SendFriendsList'
 import { Key } from '@mui/icons-material';
 import getKeys from '../keys'
 import SearchResults from './SearchResults';
+import Play from "./Play"
 
 /* Does not work due to google restricting their search suggestion api
 function getSearchSuggestions(query){
@@ -120,6 +121,7 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
                         {
                         songID: document.id,
                         songName: entry,
+                        songURL: document.data().songURL,
                         index: id
                         },
                     ]);
@@ -161,9 +163,10 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
       }
 
 
-    useEffect(() => {
-        setShowResults(true)
-    }, [userNeedsToPick])
+    // useEffect(() => {
+    //     if ()
+    //     setShowResults(true)
+    // }, [userNeedsToPick])
 
     useEffect(() => {
         console.log("not in database")
@@ -174,6 +177,8 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
             setRequestStatus("Song not known. Select a Youtube video for it.");
             //can we await a user input? If so, here is the moment to do so
             setUserNeedsToPick(true);
+        } else {
+            setUserNeedsToPick(false);
         }
     }, [unfoundSong])
 
@@ -211,9 +216,9 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
                         >
 
                                 {song.songName}
-                                
+                                {song.songURL ? <Play videoLink={song.songURL} /> : null}
                                 <Button type="button" onClick={() => {deleteById(song.index)}}>Remove</Button>
-                            </li>
+                        </li>
                         );
                     })}
                 </ul>
@@ -223,7 +228,7 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
             Friends
             {/*When send is clicked it will send songs to the recipient from a send to song object*/}
             <SendFriendList userDetails={userDetails} songList={songList} setSongList={setSongList}/>
-            <SearchResults data = {ytSearchResults} element = {resultsElement} showResults = {showResults} setShowResults = {setShowResults} setUnfoundSong = {setUnfoundSong} setRequestStatus = {setRequestStatus} setInput ={setInput} setEntry = {setEntry} setUserNeedsToPick = {setUserNeedsToPick} songList = {songList} setSongList = {setSongList} />
+            <SearchResults data = {ytSearchResults} element = {resultsElement} showResults = {userNeedsToPick} setShowResults = {setUserNeedsToPick} setUnfoundSong = {setUnfoundSong} setRequestStatus = {setRequestStatus} setInput ={setInput} setEntry = {setEntry} setUserNeedsToPick = {setUserNeedsToPick} songList = {songList} setSongList = {setSongList} />
         </Box>
     )
 }

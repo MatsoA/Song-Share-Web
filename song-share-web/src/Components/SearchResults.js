@@ -3,6 +3,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useState, useEffect } from 'react';
 import {addDoc, collection} from "firebase/firestore"
 import {database} from "./firebaseConfig"
+import Play from "./Play"
 
 export default function SearchResults({ data, element, showResults, setShowResults, setUnfoundSong, setRequestStatus, setInput, setEntry, setUserNeedsToPick, songList, setSongList}) {
     /*used for yt results display*/
@@ -48,6 +49,7 @@ export default function SearchResults({ data, element, showResults, setShowResul
                             {
                                 songID: newDoc.id,
                                 songName: ytData.title,
+                                songURL: ytData.url,
                                 index: id
                             }
                         ])
@@ -56,7 +58,11 @@ export default function SearchResults({ data, element, showResults, setShowResul
                         setInput("");
                         setEntry("");
                         setUserNeedsToPick(false);
-                }}>{ytData.title}</MenuItem>
+                        setShowResults(false);
+                }}>
+                    {ytData.title}
+                    <Play videoLink = {ytData.url}></Play>
+                </MenuItem>
             ))}
         </Menu>
     )
