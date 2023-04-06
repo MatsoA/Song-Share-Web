@@ -8,7 +8,7 @@ import { BiotechOutlined, Pending } from '@mui/icons-material'
 import SendFriend from "./SendFriend"
 import List from '@mui/material/List';
 
-export default function ActiveFriendList({userDetails}) {
+export default function SendFriendList({userDetails, songList, setSongList}) {
    
     //reads friendList from database and monitors any changes
     //hook updates and re-renders page on changes (used to correctly wait for response to render page correctly)
@@ -17,7 +17,7 @@ export default function ActiveFriendList({userDetails}) {
     return (
         <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             {sendFriendList && sendFriendList.docs.map((doc, index) => (
-                <SendFriend key= {index} userDetails = {userDetails} uid={doc.id}/>
+                <SendFriend key= {index} userDetails = {userDetails} uid={doc.id} songList={songList} setSongList={setSongList}/>
             ))}
         </List>
     )
