@@ -1,9 +1,10 @@
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState, useEffect } from 'react';
+import {addDoc, collection} from "firebase/firestore"
+import {database} from "./firebaseConfig"
 
-
-export default function SearchResults({ data, element, showResults, setShowResults }) {
+export default function SearchResults({ data, element, showResults, setShowResults, setUnfoundSong, setRequestStatus, setInput, setEntry, setUserNeedsToPick, songList, setSongList}) {
     /*used for yt results display*/
     const [anchorEl, setAnchorEl] = useState(null);
     const [menuItems, setMenuItems] = useState([]);
@@ -17,11 +18,9 @@ export default function SearchResults({ data, element, showResults, setShowResul
         } else {
             setAnchorEl(null);
         }
-    }, [showResults]);
+    }, [showResults, element]);
 
-    useEffect(() => {
-        console.log(anchorEl)
-    }, [anchorEl]);
+    
 
 
     return (
@@ -36,9 +35,31 @@ export default function SearchResults({ data, element, showResults, setShowResul
                 'aria-labelledby': 'basic-button',
             }}
         >
-            {data.map((entry, index) => (
-                <MenuItem key={index}>{entry.testField1}</MenuItem>
+            {data.map((ytData, index) => (
+                <MenuItem key={index} onClick = {async () => {
+                    const id = songList.length + 1;
+                        //add to the database, then send
+                        var newDoc = await addDoc(collection(database, "songList"), {
+                            "songName": ytData.title,
+                            "songURL": ytData.url
+                        });
+                        setSongList((prev) => [
+                            ...prev,
+                            {
+                                songID: newDoc.id,
+                                songName: ytData.title,
+                                index: id
+                            }
+                        ])
+                        setUnfoundSong(false);
+                        setRequestStatus("Song Found");
+                        setInput("");
+                        setEntry("");
+                        setUserNeedsToPick(false);
+                }}>{ytData.title}</MenuItem>
             ))}
         </Menu>
     )
 }
+
+

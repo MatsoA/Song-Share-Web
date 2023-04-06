@@ -9,6 +9,7 @@ import PendingFriendList from './PendingFriendList'
 import SendFriendList from './SendFriendsList'
 import { Key } from '@mui/icons-material';
 import getKeys from '../keys'
+import SearchResults from './SearchResults';
 
 /* Does not work due to google restricting their search suggestion api
 function getSearchSuggestions(query){
@@ -76,6 +77,9 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
     const [ytSearchResults, setSearchResults] = useState([]); //results from youtube, for displaying
     const [userNeedsToPick, setUserNeedsToPick] = useState(false); //whether the user is currently being prompted
 
+    const [resultsElement, setResultsElement] = useState(null);
+    const [showResults, setShowResults] = useState(false);
+
     const handleSearch = e => {
         e.preventDefault();
 
@@ -83,6 +87,9 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
             setMissingEntry(true);
             setRequestStatus("No Song Inputted");
         }
+
+        console.log("search entered")
+        setResultsElement(e.currentTarget)
 
         if (entry.length !== 0) {
             (async function () { //number is the quantity of search results to give
@@ -95,6 +102,7 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
                 const querySnapshot = await getDocs(songSearch);
 
                 //if query is empty, flag will remain true
+                console.log("yt search")
                 setUnfoundSong(true);
                 setRequestStatus("Unable to find Song");
                 setEntry("");
@@ -121,13 +129,16 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
                         
                     setRequestStatus("Song Found");
                 })
-                if(unfoundSong){
-                    //TODO Display ytResults with message that the song's not known yet, let user select one (or cancel)
-                    setSearchResults(ytResults);
-                    setRequestStatus("Song not known. Select a Youtube video for it.");
-                    //can we await a user input? If so, here is the moment to do so
-                    setUserNeedsToPick(true);
-                }
+                console.log(e.currentTarget)
+                setSearchResults(ytResults)
+                // if(unfoundSong){
+                //     console.log("not in database")
+                //     //TODO Display ytResults with message that the song's not known yet, let user select one (or cancel)
+                //     //setSearchResults(ytResults);
+                //     setRequestStatus("Song not known. Select a Youtube video for it.");
+                //     //can we await a user input? If so, here is the moment to do so
+                //     setUserNeedsToPick(true);
+                // }
             })();
         }
     }
@@ -149,6 +160,22 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
         })
       }
 
+
+    useEffect(() => {
+        setShowResults(true)
+    }, [userNeedsToPick])
+
+    useEffect(() => {
+        console.log("not in database")
+        //TODO Display ytResults with message that the song's not known yet, let user select one (or cancel)
+        //setSearchResults(ytResults);
+        if (unfoundSong) {
+            console.log(unfoundSong)
+            setRequestStatus("Song not known. Select a Youtube video for it.");
+            //can we await a user input? If so, here is the moment to do so
+            setUserNeedsToPick(true);
+        }
+    }, [unfoundSong])
 
     return (
         <Box
@@ -172,69 +199,31 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
 
             Songs to send
             <div>
-                {userNeedsToPick ?
-                    <div>
-                        {
-                            ytSearchResults.map((ytData)=>{
-                                return (
-                                    <div>
-                                        Youtube Results
-                                        <Button type="button" onClick={async ()=>{
-                                            const id = songList.length + 1;
-                                            //add to the database, then send
-                                            var newDoc = await addDoc(collection(database, "songList"), {
-                                                "songName": ytData.title,
-                                                "songURL": ytData.url
-                                            });
-                                            setSongList((prev) => [
-                                                ...prev,
-                                                {
-                                                    songID: newDoc.id,
-                                                    songName: ytData.title,
-                                                    index: id
-                                                }
-                                            ])
-                                            setUnfoundSong(false);
-                                            setRequestStatus("Song Found");
-                                            setInput("");
-                                            setEntry("");
-                                            setUserNeedsToPick(false);
-                                        }}>
-                                            {/*Add actual display of result here, using data from ytData*/}
-                                        </Button>
-                                    </div>
-                                );
-                            })    
-                        }
-                        <Button type="button" onClick={setUserNeedsToPick(false)}>Cancel</Button>
-                    </div>
-                :
-                    <ul>
-                        {songList.map((song) => {
-                        return (
-                            <li
-                                id={song.id}
-                                style={{
-                                listStyle: "none",
-                                }}
-                                    
-                                >
+                <ul>
+                    {songList.map((song, index) => {
+                    return (
+                        <li
+                            id={song.id}
+                            style={{
+                            listStyle: "none",
+                            }}
+                            key = {index}        
+                        >
 
-                                    {song.songName}
-                                    
-                                    <Button type="button" onClick={() => {deleteById(song.index)}}>Remove</Button>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                }
+                                {song.songName}
+                                
+                                <Button type="button" onClick={() => {deleteById(song.index)}}>Remove</Button>
+                            </li>
+                        );
+                    })}
+                </ul>
             </div>
             <Divider />
 
             Friends
             {/*When send is clicked it will send songs to the recipient from a send to song object*/}
             <SendFriendList userDetails={userDetails} songList={songList} setSongList={setSongList}/>
-
+            <SearchResults data = {ytSearchResults} element = {resultsElement} showResults = {showResults} setShowResults = {setShowResults} setUnfoundSong = {setUnfoundSong} setRequestStatus = {setRequestStatus} setInput ={setInput} setEntry = {setEntry} setUserNeedsToPick = {setUserNeedsToPick} songList = {songList} setSongList = {setSongList} />
         </Box>
     )
 }
