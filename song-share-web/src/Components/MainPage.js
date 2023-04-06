@@ -49,7 +49,7 @@ export default function MainPage({ userDetails, setUserDetails }) {
                         <TableCell sx={{ typography: 'body1'}}>Play</TableCell>
 
                             <TableCell sx={{ typography: 'body1'}}>Title</TableCell>
-                            <TableCell align = "left" sx={{ typography: 'body1'}}>Sent By</TableCell>
+                            <TableCell align = "left" sx={{ typography: 'body1'}}>Sent To</TableCell>
                             <TableCell align = "left" sx={{ typography: 'body1'}}>Rating</TableCell>
                             <TableCell align = "left" sx={{ typography: 'body1'}}>Comments</TableCell>
 

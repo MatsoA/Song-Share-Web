@@ -37,6 +37,12 @@ export default function SongRating({viewOnly, songName, sentBy, userDetails, rat
             })
         })();
     }
+
+    React.useEffect(() => {
+        handleSendReview();
+        console.log(stars);
+    }, [stars])
+
 if(viewOnly){
     return(
 <div>
@@ -54,15 +60,8 @@ return (
                 value={stars}
                 onChange={(event, newValue) => {
                     setStars(newValue);
-                    handleSendReview();
                 }}
-                />
-                <Button 
-                    endIcon={<SendIcon />} 
-                    onClick={() => {
-                        handleSendReview()
-                    }}>
-                </Button>            
+                />          
     </div>
 )
             }
