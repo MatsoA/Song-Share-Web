@@ -12,15 +12,10 @@ need to implement setting receivedSong review and rating fields in the database
 popover menu when button is clicked
 may implement rating in separate cell on table when table is sortable
 */
-export default function Review({comments, viewOnly, songName, sentBy, userDetails}) {
+export default function SongRating({viewOnly, songName, sentBy, userDetails, rating}) {
     
-    //review comments
-    const [myReview, setMyReview] = React.useState();
-
-    const handleReviewChange = (e) => {
-        const val = e.target.value;
-        setMyReview(val);
-    };
+    // rating variable
+    const [stars, setStars] = React.useState(rating);
 
     //creating the sentToList ID
     const sentToID = songName + userDetails.uid
@@ -32,50 +27,43 @@ export default function Review({comments, viewOnly, songName, sentBy, userDetail
 
         (async function () {
             await updateDoc(doc(database, "userList", sentBy, "sentSongs", sentToID), {
-                review:myReview
+                rating:stars
             })
         })();
 
         (async function () {
             await updateDoc(doc(database, "userList", userDetails.uid, "receivedSongs", receivedID), {
-                review:myReview
+                rating:stars
             })
         })();
     }
-
 if(viewOnly){
-    return (
-        <div>
-                    <TextField id="outlined-multiline-static"
-                        disabled
-                        value={myReview} 
-                        multiline maxRows={4} 
-                        defaultValue= {comments}
-                        onChange={(e) => {
-                            handleReviewChange(e)
-                        }}
-                    />
-    
-        </div>
+    return(
+<div>
+    <Rating name='read-only'
+        value = {stars}
+        readOnly/>
+</div>
     )
 }
-else{
-    return (
-        <div>
-                    <TextField id="outlined-multiline-static"
-                        value={myReview} 
-                        multiline maxRows={4} 
-                        defaultValue= {comments}
-                        onChange={(e) => {
-                            handleReviewChange(e)
-                        }}
-                    />
-                    <Button endIcon={<SendIcon />} 
+else {
+
+return (
+    <div>
+            <Rating name="simple-controlled"
+                value={stars}
+                onChange={(event, newValue) => {
+                    setStars(newValue);
+                    handleSendReview();
+                }}
+                />
+                <Button 
+                    endIcon={<SendIcon />} 
                     onClick={() => {
                         handleSendReview()
-                    }}></Button>
-    
-        </div>
-    )
-}
+                    }}>
+                </Button>            
+    </div>
+)
+            }
 }

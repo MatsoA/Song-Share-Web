@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { collection, addDoc, getDocs } from "firebase/firestore"
 import { database } from "./firebaseConfig";
 import { Box, Divider, Checkbox, FormGroup, FormControlLabel, Typography,
-    Table, TableBody, TableCell, TableHead, TableRow, Paper, TableContainer } from '@mui/material';
+    Table, TableBody, TableCell, TableHead, TableRow, Paper, TableContainer, TablePagination } from '@mui/material';
 import {SongFeedList} from './SongFeedList'
 import Song from './Song'
 import { SentByMeList } from './SentByMeList';
@@ -13,6 +13,7 @@ import { SentByMeList } from './SentByMeList';
 
 export default function MainPage({ userDetails, setUserDetails }) {
     
+
     return (
         <Box
             component="main"
@@ -28,10 +29,13 @@ export default function MainPage({ userDetails, setUserDetails }) {
                         <TableCell sx={{ typography: 'body1'}}>Play</TableCell>
                             <TableCell sx={{ typography: 'body1'}}>Title</TableCell>
                             <TableCell align = "left" sx={{ typography: 'body1'}}>Sent By</TableCell>
-                            <TableCell align = "left" sx={{ typography: 'body1'}}>Review</TableCell>
+                            <TableCell align = "left" sx={{ typography: 'body1'}}>Rating</TableCell>
+                            <TableCell align = "left" sx={{ typography: 'body1'}}>Comments</TableCell>
+
                         </TableRow>
                     </TableHead>
                     <SongFeedList userDetails = {userDetails}/>
+
                 </Table>
             </TableContainer>
             <Divider />
@@ -46,7 +50,9 @@ export default function MainPage({ userDetails, setUserDetails }) {
 
                             <TableCell sx={{ typography: 'body1'}}>Title</TableCell>
                             <TableCell align = "left" sx={{ typography: 'body1'}}>Sent By</TableCell>
-                            <TableCell align = "left" sx={{ typography: 'body1'}}>Review</TableCell>
+                            <TableCell align = "left" sx={{ typography: 'body1'}}>Rating</TableCell>
+                            <TableCell align = "left" sx={{ typography: 'body1'}}>Comments</TableCell>
+
                         </TableRow>
                     </TableHead>
                     <SentByMeList userDetails = {userDetails}/>

@@ -20,7 +20,7 @@ export function SentByMeList({userDetails}) {
     return (
         <TableBody>
             {sentFeed && sentFeed.docs.map((doc, index) => (
-                <Song key= {index} songID = {doc.data().songID} sentBy = {userDetails.uid} userDetails = {userDetails} />          
+                <Song comments={doc.data().review} viewOnly={true} key= {index} songID = {doc.data().songID} sentBy = {userDetails.uid} userDetails = {userDetails} rating = {doc.data().rating} />          
             ))}
         </TableBody>
     )
