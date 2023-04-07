@@ -47,7 +47,7 @@ function ytSearch(query, quantity){
             var output = [];
             for(let i = 0; i < result.items.length; i++){
                 output[i] = {
-                    "title": result.items[i].snippet.title, 
+                    "title": decodeURI(result.items[i].snippet.title).replace(/&amp;/g, "&"), 
                     "url": "youtu.be/" + result.items[i].id.videoId,
                     "thumbnail": result.items[i].snippet.thumbnails.default.url,
                     "channel": result.items[i].snippet.channelTitle
