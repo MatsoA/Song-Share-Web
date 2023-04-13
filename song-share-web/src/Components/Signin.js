@@ -6,6 +6,7 @@ import { redirect, useNavigate } from "react-router-dom"
 import { collection, addDoc, getDocs } from "firebase/firestore"
 import {useSignInWithGoogle} from "react-firebase-hooks/auth"
 import Banner from './banner';
+import gif from ''
 
 
 
