@@ -19,7 +19,7 @@ export default function MainPage({ userDetails, setUserDetails }) {
     return (
         <Box
             component="main"
-            sx={{ flexGrow: 1, bgcolor: 'background.default', pl: 30, pt: 5 }}>
+            sx={{ flexGrow: 1, bgcolor: 'background.default', pl: 30, pt: 7 }}>
             <Typography variant='h6'>
                 Sent To Me
             </Typography>

@@ -185,7 +185,7 @@ export default function SendSongsPage({ userDetails, setUserDetails }) {
     return (
         <Box
             component="main"
-            sx={{ flexGrow: 1, bgcolor: 'background.default', pl: 30, pt: 5 }}>
+            sx={{ flexGrow: 1, bgcolor: 'background.default', pl: 30, pt: 7 }}>
             <form noValidate autoComplete='off' onSubmit={handleSearch}>
                 <TextField
                     helperText={requestStatus}
